@@ -9,12 +9,13 @@ using System.Linq;
 
 namespace EbayNet.Authentication
 {
-    public class OAuth2Authenticator
+    public sealed class OAuth2Authenticator
     {
         private const string _productionUrl = "https://api.ebay.com/";
         private const string _sandboxUrl = "https://api.sandbox.ebay.com/";
         private const string _OAuthTokenRequestEndpoint = "identity/v1/oauth2/token/";
         private const string _OAuthScopeEndpoint = "oauth/api_scope";
+        private Token _token = new Token();
         public Environment Environment { get; }
         public string Base64EncodedOAuthCredentials { get; }
 
@@ -35,7 +36,16 @@ namespace EbayNet.Authentication
             Base64EncodedOAuthCredentials = base64EncodedOAuthCredentials;
         }
 
-        public async Task<Token> Authenticate()
+        public async Task<Token> GetTokenAsync()
+        {
+            if (_token.HasExpired)
+            {
+                _token = await Authenticate();
+            }
+
+            return _token;
+        }
+        internal async Task<Token> Authenticate()
         {
             var url = ResolveUrlForEnvironment();
             var result = await url
