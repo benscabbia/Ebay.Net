@@ -44,8 +44,7 @@ namespace ebay.tests
         
         [Fact]
         public async Task OAuth2Authenticator_ShouldUse_SanboxUrl(){
-            var authenticator = new OAuth2Authenticator("clientId", "clientSecret");
-            authenticator.Environment = EbayNet.Environment.Sandbox;
+            var authenticator = new OAuth2Authenticator("clientId", "clientSecret", EbayNet.Environment.Sandbox);
 
             using(var httpTest = new HttpTest())
             {

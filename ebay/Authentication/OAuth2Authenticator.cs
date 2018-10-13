@@ -15,20 +15,23 @@ namespace EbayNet.Authentication
         private const string _sandboxUrl = "https://api.sandbox.ebay.com/";
         private const string _OAuthTokenRequestEndpoint = "identity/v1/oauth2/token/";
         private const string _OAuthScopeEndpoint = "oauth/api_scope";
-        public Environment Environment { get; set; } = Environment.Production;
+        public Environment Environment { get; }
         public string Base64EncodedOAuthCredentials { get; }
 
-        public OAuth2Authenticator(string clientId, string clientSecret)
+        public OAuth2Authenticator(string clientId, string clientSecret, Environment environment = Environment.Production)
         {
+            Environment = environment;
             var OAuthCredentials = $"{clientId}:{clientSecret}";
             Base64EncodedOAuthCredentials = OAuthCredentials.Base64Encode();
         }
 
-        /// <summary> Format specification: https://developer.ebay.com/api-docs/static/oauth-base64-credentials.html
-        /// <para> Base64 encoded "clientId:clientSecret" </para>
+        /// <summary> 
+        /// Format specification: https://developer.ebay.com/api-docs/static/oauth-base64-credentials.html
         /// </summary> 
-        public OAuth2Authenticator(string base64EncodedOAuthCredentials)
+        /// <param name="base64EncodedOAuthCredentials"> Base64 encoded "clientId:clientSecret" </param>
+        public OAuth2Authenticator(string base64EncodedOAuthCredentials, Environment environment = Environment.Production)
         {
+            Environment = environment;
             Base64EncodedOAuthCredentials = base64EncodedOAuthCredentials;
         }
 
