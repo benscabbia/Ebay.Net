@@ -7,6 +7,11 @@ namespace EbayNet.Extensions
     {
         public static string Base64Encode(this string @this)
         {
+            if (string.IsNullOrEmpty(@this))
+            {
+                return @this;
+            }
+
             var plainTextBytes = Encoding.UTF8.GetBytes(@this);
             return Convert.ToBase64String(plainTextBytes);
         }
