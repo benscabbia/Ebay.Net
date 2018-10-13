@@ -27,6 +27,8 @@ namespace EbayNet.Authentication
 
         public DateTime CreateDate { get; }
 
-        public bool HasExpired => CreateDate.Add(TimeSpan.FromSeconds(ExpiresIn)) <= DateTime.Now;
+        public double ExpiryThresholdSeconds { get; set; } = 10d;
+
+        public bool HasExpired => CreateDate.Add(TimeSpan.FromSeconds(ExpiresIn - ExpiryThresholdSeconds)) <= DateTime.Now;
     }
 }
