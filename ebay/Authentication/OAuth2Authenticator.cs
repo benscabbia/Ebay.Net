@@ -40,7 +40,7 @@ namespace EbayNet.Authentication
         {
             if (_token.HasExpired)
             {
-                _token = await Authenticate();
+                _token = await Authenticate().ConfigureAwait(false);
             }
 
             return _token;
@@ -61,7 +61,8 @@ namespace EbayNet.Authentication
                         grant_type = "client_credentials",
                         scope = url.AppendPathSegment(_OAuthScopeEndpoint).Path
                     })
-                .ReceiveJson<Token>();
+                .ReceiveJson<Token>()
+                .ConfigureAwait(false);
 
             return result;
         }

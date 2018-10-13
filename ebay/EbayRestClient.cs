@@ -13,7 +13,7 @@ namespace EbayNet
         }
         public async Task<T> Request<T>(Func<string, Task<T>> request) 
         {
-            var token = await _oAuth2Authenticator.GetTokenAsync();
+            var token = await _oAuth2Authenticator.GetTokenAsync().ConfigureAwait(false);
             var response = await request(token.AccessToken).ConfigureAwait(false);
             return response;
         }
