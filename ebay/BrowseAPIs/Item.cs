@@ -12,10 +12,12 @@ using System.Threading.Tasks;
 */
 namespace EbayNet.BrowseAPIs
 {
-    public class Item
+    public sealed class Item
     {
-        public Item()
+        private readonly EbayRestClient _ebayRestClient;
+        public Item(EbayRestClient ebayRestClient)
         {
+            _ebayRestClient = ebayRestClient;
         }
 
         public Task GetItem(){

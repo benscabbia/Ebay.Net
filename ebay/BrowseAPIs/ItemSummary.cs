@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 */
 namespace EbayNet.BrowseAPIs
 {
-    public class ItemSummary
+    public sealed class ItemSummary
     {
-        public ItemSummary()
+        private readonly EbayRestClient _ebayRestClient;
+        public ItemSummary(EbayRestClient ebayRestClient)
         {
+            _ebayRestClient = ebayRestClient;
         }
 
         public Task Search(){

@@ -8,7 +8,7 @@ using Xunit;
 
 namespace ebay.tests
 {
-    public class OAuth2AuthenticatorTests
+    public sealed class OAuth2AuthenticatorTests
     {
         [Theory]
         [InlineData(null, null, "Og==")]
