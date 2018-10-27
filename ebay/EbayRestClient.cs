@@ -1,21 +1,28 @@
 using System;
 using System.Threading.Tasks;
+using BrowseAPIs.Models;
 using EbayNet.Authentication;
 using EbayNet.BrowseAPIs;
+using Flurl;
+using Flurl.Http;
+
 namespace EbayNet
 {
     public sealed class EbayRestClient
     {
-        private OAuth2Authenticator _oAuth2Authenticator;
-        public EbayRestClient(OAuth2Authenticator oAuth2Authenticator)
+		public OAuth2Authenticator OAuth2Authenticator { get; set; }
+		public UrlService UrlService { get; set; }
+
+        public async Task<T> Request<T>(IFlurlRequest flurlRequest)
         {
-           _oAuth2Authenticator = oAuth2Authenticator; 
-        }
-        public async Task<T> Request<T>(Func<string, Task<T>> request) 
-        {
-            var token = await _oAuth2Authenticator.GetTokenAsync().ConfigureAwait(false);
-            var response = await request(token.AccessToken).ConfigureAwait(false);
-            return response;
+			var token = await OAuth2Authenticator.GetTokenAsync();
+
+			flurlRequest.Url = Url.Combine(UrlService.Url, flurlRequest.Url);
+
+			return await flurlRequest
+				.WithOAuthBearerToken(token.AccessToken)
+				.GetAsync()
+				.ReceiveJson<T>();
         }
     }
 }

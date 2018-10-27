@@ -11,28 +11,25 @@ namespace EbayNet.Authentication
 {
     public sealed class OAuth2Authenticator
     {
-        private const string _productionUrl = "https://api.ebay.com/";
-        private const string _sandboxUrl = "https://api.sandbox.ebay.com/";
+
         private const string _OAuthTokenRequestEndpoint = "identity/v1/oauth2/token/";
         private const string _OAuthScopeEndpoint = "oauth/api_scope";
         private Token _token = new Token();
-        public Environment Environment { get; }
         public string Base64EncodedOAuthCredentials { get; }
+		public UrlService UrlService { get; set; } = new UrlService();
 
-        public OAuth2Authenticator(string clientId, string clientSecret, Environment environment = Environment.Production)
+        public OAuth2Authenticator(string clientId, string clientSecret)
         {
-            Environment = environment;
             var OAuthCredentials = $"{clientId}:{clientSecret}";
             Base64EncodedOAuthCredentials = OAuthCredentials.Base64Encode();
         }
 
-        /// <summary> 
+        /// <summary>
         /// Format specification: https://developer.ebay.com/api-docs/static/oauth-base64-credentials.html
-        /// </summary> 
+        /// </summary>
         /// <param name="base64EncodedOAuthCredentials"> Base64 encoded "clientId:clientSecret" </param>
-        public OAuth2Authenticator(string base64EncodedOAuthCredentials, Environment environment = Environment.Production)
+        public OAuth2Authenticator(string base64EncodedOAuthCredentials)
         {
-            Environment = environment;
             Base64EncodedOAuthCredentials = base64EncodedOAuthCredentials;
         }
 
@@ -47,17 +44,17 @@ namespace EbayNet.Authentication
         }
         internal async Task<Token> Authenticate()
         {
-            var url = ResolveUrlForEnvironment();
+			var url = UrlService.Url;
             var result = await url
                 .AppendPathSegment(_OAuthTokenRequestEndpoint)
                 .WithHeaders(
-                    new {   
+                    new {
                             Content_Type = "application/x-www-form-urlencoded",
                             Authorization = $"Basic {Base64EncodedOAuthCredentials}"
-                    }, 
+                    },
                     replaceUnderscoreWithHyphen: true)
                 .PostUrlEncodedAsync(
-                    new { 
+                    new {
                         grant_type = "client_credentials",
                         scope = url.AppendPathSegment(_OAuthScopeEndpoint).Path
                     })
@@ -67,10 +64,6 @@ namespace EbayNet.Authentication
             return result;
         }
 
-        private string ResolveUrlForEnvironment()
-        {
-           return Environment == Environment.Production ? _productionUrl : _sandboxUrl; 
-        }
 
     }
 }

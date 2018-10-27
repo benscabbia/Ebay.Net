@@ -8,32 +8,43 @@ namespace EbayNet
         private string _ebayAPIUrl = "https://api.ebay.com";
         private string oauth2Url = "/identity/v1/oauth2/token";
         private EbayRestClient _ebayRestClient;
-        public Environment Environment { get; }
+        public Environment Environment { get; private set; }
         public BrowseAPI BrowseAPI { get; private set; }
+
         public EbayClient(string clientId, string clientSecret, Environment environment = Environment.Production)
         {
-           _OAuth2Authenticator = new OAuth2Authenticator(clientId, clientSecret, environment); 
-           Environment = environment;
-           InitializeAPIs();
+			Setup(new OAuth2Authenticator(clientId, clientSecret), environment);
         }
 
         public EbayClient(string base64EncodedOAuthCredentials, Environment environment = Environment.Production)
         {
-            _OAuth2Authenticator = new OAuth2Authenticator(base64EncodedOAuthCredentials, environment);            
-            Environment = environment;
-            InitializeAPIs();
+			Setup(new OAuth2Authenticator(base64EncodedOAuthCredentials), environment);
         }
 
-        public EbayClient(OAuth2Authenticator authenticator)
+        public EbayClient(OAuth2Authenticator authenticator, Environment environment = Environment.Production)
         {
-            _OAuth2Authenticator = authenticator;
-            Environment = authenticator.Environment;
-            InitializeAPIs();
+			Setup(authenticator, environment);
         }
-        
+
+
+		private void Setup(OAuth2Authenticator authenticator, Environment environment)
+		{
+			_OAuth2Authenticator = authenticator;
+			Environment = environment;
+			InitializeAPIs();
+		}
+
         private void InitializeAPIs()
         {
-            _ebayRestClient = new EbayRestClient(_OAuth2Authenticator);
+			var urlService = new UrlService(Environment);
+
+			_OAuth2Authenticator.UrlService = urlService;
+			_ebayRestClient = new EbayRestClient
+			{
+				OAuth2Authenticator = _OAuth2Authenticator,
+				UrlService = urlService
+			};
+
             BrowseAPI = new BrowseAPI(_ebayRestClient);
         }
     }
