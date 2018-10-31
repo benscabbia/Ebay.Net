@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace EbayNet.Authentication
 {
-    public sealed class OAuth2Authenticator
+    public sealed class OAuth2Authenticator : IOAuth2Authenticator
     {
 
         private const string _OAuthTokenRequestEndpoint = "identity/v1/oauth2/token/";
@@ -37,12 +37,12 @@ namespace EbayNet.Authentication
         {
             if (_token.HasExpired)
             {
-                _token = await Authenticate().ConfigureAwait(false);
+                _token = await AuthenticateAsync().ConfigureAwait(false);
             }
 
             return _token;
         }
-        internal async Task<Token> Authenticate()
+        internal async Task<Token> AuthenticateAsync()
         {
 			var url = UrlService.Url;
             var result = await url
@@ -63,7 +63,5 @@ namespace EbayNet.Authentication
 
             return result;
         }
-
-
     }
 }

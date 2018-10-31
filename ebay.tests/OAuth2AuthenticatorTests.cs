@@ -31,7 +31,7 @@ namespace ebay.tests
             var authenticator = new OAuth2Authenticator("clientId", "clientSecret");
             using(var httpTest = new HttpTest())
             {
-                var token = await authenticator.Authenticate();
+                var token = await authenticator.AuthenticateAsync();
                 httpTest
                     .ShouldHaveCalled("https://api.ebay.com/identity/v1/oauth2/token/")
                     .WithContentType("application/x-www-form-urlencoded")
@@ -48,7 +48,7 @@ namespace ebay.tests
 			authenticator.UrlService.Environment = EbayNet.Environment.Sandbox;
             using(var httpTest = new HttpTest())
             {
-                var token = await authenticator.Authenticate();
+                var token = await authenticator.AuthenticateAsync();
                 httpTest
                     .ShouldHaveCalled("https://api.sandbox.ebay.com/identity/v1/oauth2/token/")
                     .WithContentType("application/x-www-form-urlencoded")
