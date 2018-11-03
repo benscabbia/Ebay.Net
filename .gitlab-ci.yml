@@ -1,0 +1,25 @@
+image: microsoft/dotnet:latest
+
+variables:
+  BUILD_CONFIGURATION: Debug
+
+stages:
+  - test
+  - pack
+
+test:
+  stage: test
+  script:
+    - dotnet test ebay.tests/
+
+pack:
+  stage: pack
+  variables:
+    PACK_PATH: $BUILD_CONFIGURATION
+  script:
+    - dotnet build ebay/
+    - dotnet pack ebay/ -c $BUILD_CONFIGURATION -o $CI_PROJECT_DIR/$PACK_PATH
+
+  artifacts:
+    paths:
+      - $PACK_PATH
