@@ -28,29 +28,32 @@ namespace EbayNet.BrowseAPIs
 
         // /item/{item_id}
         public async Task<ItemModel> GetItem(string itemId)
-		{
-			var item = await _ebayRestClient.Request<ItemModel>(
-				_resource
-				.AppendPathSegment($"v1|{itemId}|0", fullyEncode:true)
+        {
+            var item = await _ebayRestClient.Request<ItemModel>(
+                _resource
+                .AppendPathSegment($"v1|{itemId}|0", fullyEncode: true)
                 .WithHeaders(
-                    new {
-                            Content_Type = "application/json",
-                            X_EBAY_C_ENDUSERCTX = "contextualLocation=country=<2_character_country_code>,zip=<zip_code>,affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>"
-                        }, replaceUnderscoreWithHyphen: true)
-			);
+                    new
+                    {
+                        Content_Type = "application/json",
+                        X_EBAY_C_ENDUSERCTX = "contextualLocation=country=<2_character_country_code>,zip=<zip_code>,affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>"
+                    }, replaceUnderscoreWithHyphen: true)
+            );
 
-			return item;
+            return item;
         }
 
 
         // /item/get_item_by_legacy_id
-        public Task GetItemByLegacyId(){
+        public Task GetItemByLegacyId()
+        {
             throw new NotImplementedException();
         }
 
 
         // /item/get_items_by_item_group
-        public Task GetItemByItemGroup(){
+        public Task GetItemByItemGroup()
+        {
             throw new NotImplementedException();
         }
     }

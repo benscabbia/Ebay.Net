@@ -16,7 +16,7 @@ namespace EbayNet.Authentication
         private const string _OAuthScopeEndpoint = "oauth/api_scope";
         private Token _token = new Token();
         public string Base64EncodedOAuthCredentials { get; }
-		public UrlService UrlService { get; set; } = new UrlService();
+        public UrlService UrlService { get; set; } = new UrlService();
 
         public OAuth2Authenticator(string clientId, string clientSecret)
         {
@@ -44,17 +44,19 @@ namespace EbayNet.Authentication
         }
         internal async Task<Token> AuthenticateAsync()
         {
-			var url = UrlService.Url;
+            var url = UrlService.Url;
             var result = await url
                 .AppendPathSegment(_OAuthTokenRequestEndpoint)
                 .WithHeaders(
-                    new {
-                            Content_Type = "application/x-www-form-urlencoded",
-                            Authorization = $"Basic {Base64EncodedOAuthCredentials}"
+                    new
+                    {
+                        Content_Type = "application/x-www-form-urlencoded",
+                        Authorization = $"Basic {Base64EncodedOAuthCredentials}"
                     },
                     replaceUnderscoreWithHyphen: true)
                 .PostUrlEncodedAsync(
-                    new {
+                    new
+                    {
                         grant_type = "client_credentials",
                         scope = url.AppendPathSegment(_OAuthScopeEndpoint).Path
                     })

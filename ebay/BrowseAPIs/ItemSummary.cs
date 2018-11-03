@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 /*
     https://developer.ebay.com/api-docs/buy/browse/resources/methods
-    Lets shoppers search for specific items by keyword, GTIN, category, product, 
+    Lets shoppers search for specific items by keyword, GTIN, category, product,
     or item aspects and refine the results by using filters.
 */
 namespace EbayNet.BrowseAPIs
@@ -16,7 +16,8 @@ namespace EbayNet.BrowseAPIs
             _ebayRestClient = ebayRestClient;
         }
 
-        public Task Search(){
+        public Task Search()
+        {
             throw new NotImplementedException();
         }
     }

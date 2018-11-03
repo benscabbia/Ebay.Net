@@ -13,12 +13,12 @@ namespace EbayNet.Authentication
     {
         public Token()
         {
-           CreateDate = DateTime.Now; 
+            CreateDate = DateTime.Now;
         }
 
         [JsonProperty("access_token")]
         public string AccessToken { get; set; }
-        
+
         [JsonProperty("expires_in")]
         public double ExpiresIn { get; set; }
 

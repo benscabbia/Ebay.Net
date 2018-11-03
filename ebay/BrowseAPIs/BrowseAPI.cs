@@ -15,8 +15,8 @@ namespace EbayNet.BrowseAPIs
     {
         public BrowseAPI(EbayRestClient ebayRestClient)
         {
-           Item = new Item(ebayRestClient);
-           ItemSummary = new ItemSummary(ebayRestClient);
+            Item = new Item(ebayRestClient);
+            ItemSummary = new ItemSummary(ebayRestClient);
         }
 
         public Item Item { get; }
