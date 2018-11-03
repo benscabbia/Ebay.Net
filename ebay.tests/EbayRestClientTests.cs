@@ -1,10 +1,6 @@
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using BrowseAPIs.Models;
 using EbayNet;
 using EbayNet.Authentication;
-using EbayNet.BrowseAPIs;
 using FluentAssertions;
 using Flurl.Http;
 using Flurl.Http.Testing;
