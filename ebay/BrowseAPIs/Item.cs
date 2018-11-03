@@ -21,7 +21,7 @@ namespace EbayNet.BrowseAPIs
     {
         private string _itemUrl = "buy/browse/v1/item";
         private string _legacyItemUrl = "buy/browse/v1/item/get_item_by_legacy_id";
-        private string _itemByItemGroupUrl = "buy/browse/v1/item/get_items_by_item_group";
+        private string _itemsByItemGroupUrl = "buy/browse/v1/item/get_items_by_item_group";
         private readonly EbayRestClient _ebayRestClient;
         public Item(EbayRestClient ebayRestClient)
         {
@@ -65,9 +65,20 @@ namespace EbayNet.BrowseAPIs
 
 
         // /item/get_items_by_item_group
-        public Task GetItemByItemGroup()
+        public async Task<ItemGroupModel> GetItemByItemGroup(string itemGroupId)
         {
-            throw new NotImplementedException();
+            var item = await _ebayRestClient.Request<ItemGroupModel>(
+               _itemsByItemGroupUrl
+                .AppendPathSegment($"?item_group_id={itemGroupId}", fullyEncode: true)
+                .WithHeaders(
+                    new
+                    {
+                        Content_Type = "application/json",
+                        X_EBAY_C_ENDUSERCTX = "contextualLocation=country=<2_character_country_code>,zip=<zip_code>,affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>"
+                    }, replaceUnderscoreWithHyphen: true)
+            );
+
+            return item;
         }
     }
 }
