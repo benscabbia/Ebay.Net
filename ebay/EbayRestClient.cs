@@ -10,8 +10,8 @@ namespace EbayNet
 {
     public sealed class EbayRestClient
     {
-		public OAuth2Authenticator OAuth2Authenticator { get; set; }
-		public UrlService UrlService { get; set; }
+		public IOAuth2Authenticator OAuth2Authenticator { get; set; }
+		public UrlService UrlService { get; set; } = new UrlService();
 
         public async Task<T> Request<T>(IFlurlRequest flurlRequest)
         {

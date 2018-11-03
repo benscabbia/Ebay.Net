@@ -31,11 +31,10 @@ namespace EbayNet.BrowseAPIs
 		{
 			var item = await _ebayRestClient.Request<ItemModel>(
 				_resource
-				.AppendPathSegment($"v1|{itemId}|0", fullyEncode:false)
-                // .AppendPathSegment($"|0", fullyEncode:false)
+				.AppendPathSegment($"v1|{itemId}|0", fullyEncode:true)
                 .WithHeaders(
                     new {
-                            Context_Type = "application/json",
+                            Content_Type = "application/json",
                             X_EBAY_C_ENDUSERCTX = "contextualLocation=country=<2_character_country_code>,zip=<zip_code>,affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>"
                         }, replaceUnderscoreWithHyphen: true)
 			);
