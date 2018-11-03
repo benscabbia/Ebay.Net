@@ -19,7 +19,9 @@ namespace EbayNet.BrowseAPIs
 {
     public sealed class Item
     {
-        private string _resource = "buy/browse/v1/item";
+        private string _itemUrl = "buy/browse/v1/item";
+        private string _legacyItemUrl = "buy/browse/v1/item/get_item_by_legacy_id";
+        private string _itemByItemGroupUrl = "buy/browse/v1/item/get_items_by_item_group";
         private readonly EbayRestClient _ebayRestClient;
         public Item(EbayRestClient ebayRestClient)
         {
@@ -30,7 +32,7 @@ namespace EbayNet.BrowseAPIs
         public async Task<ItemModel> GetItem(string itemId)
         {
             var item = await _ebayRestClient.Request<ItemModel>(
-                _resource
+                _itemUrl
                 .AppendPathSegment($"v1|{itemId}|0", fullyEncode: true)
                 .WithHeaders(
                     new
@@ -45,9 +47,20 @@ namespace EbayNet.BrowseAPIs
 
 
         // /item/get_item_by_legacy_id
-        public Task GetItemByLegacyId()
+        public async Task<LegacyItemModel> GetItemByLegacyId(string legacyItemId)
         {
-            throw new NotImplementedException();
+            var item = await _ebayRestClient.Request<LegacyItemModel>(
+                _legacyItemUrl
+                .AppendPathSegment($"?legacy_item_id={legacyItemId}", fullyEncode: true)
+                .WithHeaders(
+                    new
+                    {
+                        Content_Type = "application/json",
+                        X_EBAY_C_ENDUSERCTX = "contextualLocation=country=<2_character_country_code>,zip=<zip_code>,affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>"
+                    }, replaceUnderscoreWithHyphen: true)
+            );
+
+            return item;
         }
 
 
