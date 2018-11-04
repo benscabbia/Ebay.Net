@@ -5,8 +5,6 @@ namespace EbayNet
     public sealed class EbayClient
     {
         private OAuth2Authenticator _OAuth2Authenticator;
-        private string _ebayAPIUrl = "https://api.ebay.com";
-        private string oauth2Url = "/identity/v1/oauth2/token";
         private EbayRestClient _ebayRestClient;
         public Environment Environment { get; private set; }
         public BrowseAPI BrowseAPI { get; private set; }
