@@ -6,6 +6,8 @@ namespace BrowseAPIs.Models
     {
         public static string ToJson(this ItemGroupModel self) => JsonConvert.SerializeObject(self, BrowseAPIs.Models.Converter.Settings);
         public static string ToJson(this ItemModel self) => JsonConvert.SerializeObject(self, BrowseAPIs.Models.Converter.Settings);
+        public static string ToJson(this ItemSummaryCollectionModel self) => JsonConvert.SerializeObject(self, BrowseAPIs.Models.Converter.Settings);
+        public static string ToJson(this ItemSummaryModel self) => JsonConvert.SerializeObject(self, BrowseAPIs.Models.Converter.Settings);
 
     }
 }

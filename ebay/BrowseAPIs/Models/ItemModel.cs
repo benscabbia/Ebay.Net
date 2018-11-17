@@ -1,17 +1,7 @@
-// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
-//
-//    using QuickType;
-//
-//    var item = Item.FromJson(jsonString);
-
 namespace BrowseAPIs.Models
 {
     using System;
-    using System.Collections.Generic;
-
-    using System.Globalization;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
 
     public partial class ItemModel
     {
