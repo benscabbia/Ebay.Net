@@ -16,10 +16,17 @@ namespace EbayNet
 
             flurlRequest.Url = Url.Combine(UrlService.Url, flurlRequest.Url);
 
-            return await flurlRequest
-                .WithOAuthBearerToken(token.AccessToken)
-                .GetAsync()
-                .ReceiveJson<T>();
+            try
+            {
+                return await flurlRequest
+                    .WithOAuthBearerToken(token.AccessToken)
+                    .GetAsync()
+                    .ReceiveJson<T>();
+            }
+            catch (FlurlHttpException ex)
+            {
+                throw new EbayException(ex.Message, ex);
+            }
         }
     }
 }
