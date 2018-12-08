@@ -30,7 +30,8 @@ namespace EbayNet.BrowseAPIs
                         Content_Type = "application/json",
                         X_EBAY_C_ENDUSERCTX = "contextualLocation=country=<2_character_country_code>,zip=<zip_code>,affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>"
                     }, replaceUnderscoreWithHyphen: true)
-            );
+                )
+                .ConfigureAwait(false);
 
             return item;
         }

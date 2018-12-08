@@ -21,7 +21,8 @@ namespace EbayNet
                 return await flurlRequest
                     .WithOAuthBearerToken(token.AccessToken)
                     .GetAsync()
-                    .ReceiveJson<T>();
+                    .ReceiveJson<T>()
+                    .ConfigureAwait(false);
             }
             catch (FlurlHttpException ex)
             {
