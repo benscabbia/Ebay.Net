@@ -4,7 +4,7 @@ namespace EbayNet
 {
     public sealed class EbayClient
     {
-        private OAuth2Authenticator _OAuth2Authenticator;
+        private IOAuth2Authenticator _OAuth2Authenticator;
         private EbayRestClient _ebayRestClient;
         public Environment Environment { get; private set; }
         public BrowseAPI BrowseAPI { get; private set; }
@@ -28,12 +28,12 @@ namespace EbayNet
             Setup(new OAuth2Authenticator(base64EncodedOAuthCredentials), environment);
         }
 
-        public EbayClient(OAuth2Authenticator authenticator, Environment environment = Environment.Production)
+        public EbayClient(IOAuth2Authenticator authenticator, Environment environment = Environment.Production)
         {
             Setup(authenticator, environment);
         }
 
-        private void Setup(OAuth2Authenticator authenticator, Environment environment)
+        private void Setup(IOAuth2Authenticator authenticator, Environment environment)
         {
             _OAuth2Authenticator = authenticator;
             Environment = environment;

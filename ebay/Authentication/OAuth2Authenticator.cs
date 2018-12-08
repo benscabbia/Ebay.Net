@@ -42,6 +42,7 @@ namespace EbayNet.Authentication
 
             return _token;
         }
+
         internal async Task<Token> AuthenticateAsync()
         {
             var url = UrlService.Url;
