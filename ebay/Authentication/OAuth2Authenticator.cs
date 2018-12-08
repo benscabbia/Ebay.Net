@@ -45,25 +45,33 @@ namespace EbayNet.Authentication
         internal async Task<Token> AuthenticateAsync()
         {
             var url = UrlService.Url;
-            var result = await url
-                .AppendPathSegment(_OAuthTokenRequestEndpoint)
-                .WithHeaders(
-                    new
-                    {
-                        Content_Type = "application/x-www-form-urlencoded",
-                        Authorization = $"Basic {Base64EncodedOAuthCredentials}"
-                    },
-                    replaceUnderscoreWithHyphen: true)
-                .PostUrlEncodedAsync(
-                    new
-                    {
-                        grant_type = "client_credentials",
-                        scope = url.AppendPathSegment(_OAuthScopeEndpoint).Path
-                    })
-                .ReceiveJson<Token>()
-                .ConfigureAwait(false);
 
-            return result;
+            try
+            {
+                var result = await url
+                    .AppendPathSegment(_OAuthTokenRequestEndpoint)
+                    .WithHeaders(
+                        new
+                        {
+                            Content_Type = "application/x-www-form-urlencoded",
+                            Authorization = $"Basic {Base64EncodedOAuthCredentials}"
+                        },
+                        replaceUnderscoreWithHyphen: true)
+                    .PostUrlEncodedAsync(
+                        new
+                        {
+                            grant_type = "client_credentials",
+                            scope = url.AppendPathSegment(_OAuthScopeEndpoint).Path
+                        })
+                    .ReceiveJson<Token>()
+                    .ConfigureAwait(false);
+
+                return result;
+            }
+            catch (FlurlHttpException ex)
+            {
+                throw new EbayException(ex.Message, ex);
+            }
         }
     }
 }
