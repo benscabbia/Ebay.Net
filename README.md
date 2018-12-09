@@ -30,7 +30,16 @@ For instance, to call 'Get Item', you would do: `client.BrowseAPI.Item.GetItem(<
 		- [Get Item By Legacy Id](https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItemByLegacyId)
 		- [Get Item By Item Group](https://developer.ebay.com/api-docs/buy/browse/resources/item/methods/getItemByLegacyId)
 
-## Authentication
+---
+
+## Getting started
+
+Add the package:
+```
+dotnet add package Ebay.Net
+``` 
+
+### Authentication
 
 Ebay.net supports both Production and Sandbox environments. You set the `Environment` enum during initialisation of the client or authenticator like shown in examples below. The default is `Environment.Production`.
 
@@ -54,9 +63,7 @@ var client = new EbayClient(auth);
 
 Ebay.net will handle token expiration and renew for you.
 
-
-
-## Error and Exception Handling 
+### Error and Exception Handling 
 Any error in the library will result in a generic `EbayException`. You can extract the message to determine the cause of the issue. 
 
 ```csharp
