@@ -19,7 +19,7 @@
     <RepositoryUrl>https://github.com/benscabbia/ebay.net</RepositoryUrl>
     <Summary>A client library for the ebay API targeting .NET standard 2.0</Summary>
     <PackageTags>ebay, ebay.net, api, netstandard, client, library</PackageTags>
-    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
-    <Version>1.0.0</Version>
+    <PackageReleaseNotes>Initial Release and fixed license url</PackageReleaseNotes>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 </Project>
