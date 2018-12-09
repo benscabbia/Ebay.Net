@@ -15,7 +15,7 @@
 		<Copyright>Copyright 2018 (c) Benjamin Scabbia</Copyright>
     <Company>https://benscabbia.co.uk</Company>
     <PackageProjectUrl>https://github.com/benscabbia/ebay.net.git</PackageProjectUrl>
-		<PackageLicenseUrl>https://github.com/benscabbia/ebay.net/LICENSE.md</PackageLicenseUrl>
+		<PackageLicenseUrl>https://github.com/benscabbia/ebay.net/blob/master/LICENSE.md</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/benscabbia/ebay.net</RepositoryUrl>
     <Summary>A client library for the ebay API targeting .NET standard 2.0</Summary>
     <PackageTags>ebay, ebay.net, api, netstandard, client, library</PackageTags>
