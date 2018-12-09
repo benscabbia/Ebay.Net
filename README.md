@@ -47,7 +47,7 @@ var auth = new OAuth2Authenticator("base64encoded");
 var client = new EbayClient(auth);
 ```
 
-Ebay.net will handle token expiration for you.
+Ebay.net will handle token expiration and renew for you.
 
 
 
