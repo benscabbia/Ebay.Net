@@ -1,5 +1,10 @@
 # ebay.net
 
+| master |
+|--------|
+| [![pipeline status](https://gitlab.com/benscabbia/ebay.net/badges/master/pipeline.svg)](https://gitlab.com/benscabbia/ebay.net/commits/master) |
+
+
 A client library for the [ebay API](https://developer.ebay.com/api-docs/) targeting .NET standard 2.0.
 
 
